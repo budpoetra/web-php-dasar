@@ -16,6 +16,10 @@ $mahasiswa = query("SELECT * FROM mahasiswa");
 
 <h1>Web PHP Dasar</h1>
 
+<a href="add.php">Add New Data</a>
+<br>
+<br>
+
 <table border="1" cellspacing="0" cellpadding="10">
     <tr>
         <th></th>
@@ -34,9 +38,8 @@ $mahasiswa = query("SELECT * FROM mahasiswa");
             <td>
                 <a href="edit.php">Edit</a>
                 |
-                <a href="delete.php">Delete</a>
+                <a href="delete.php?nama=<?= $mhs["nama"]; ?>" onclick="return confirm('Apakah Anda Yakin Akan Menghapus Data Ini?');">Delete</a>
             </td>
-
             <td> <?= $i; ?> </td>
             <td><img src="img/<?= $mhs["gambar"]; ?>" width="50"></td>
             <td><?= $mhs["nama"] ?></td>
