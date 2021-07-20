@@ -38,8 +38,9 @@ if ( isset($_POST["submit"]) ) {
 <body>
 
 <h1>EDIT DATA</h1>
-<form action="" method="POST">
-    <input type="hidden" name="id" id="id" value="<?= $mhs[0]["id"]; ?>">
+<form action="" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="<?= $mhs[0]["id"]; ?>">
+    <input type="hidden" name="oldGambar" value="<?= $mhs[0]["gambar"]; ?>">
     <table>
         
         <tr>
@@ -66,7 +67,16 @@ if ( isset($_POST["submit"]) ) {
         <tr>
             <td><label for ="gambar">Photo</label></td>
             <td>:</td>
-            <td><input type="text" name="gambar" id="gambar" required value="<?= $mhs[0]["gambar"]; ?>"></td>
+        </tr>
+        <tr>
+            <td>
+                <img src="img/<?= $mhs[0]["gambar"]; ?>" width="75">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="file" name="gambar" id="gambar">
+            </td>
         </tr>
         <tr>
             <td><button type="submit" name="submit">Submit</button></td>

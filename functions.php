@@ -22,7 +22,12 @@ function add($data) {
     $npm = htmlspecialchars($data["npm"]);
     $jurusan = htmlspecialchars($data["jurusan"]);
     $email = htmlspecialchars($data["email"]);
-    $gambar = $data["gambar"];
+
+    // Upload gambar
+    $gambar = upload();
+    if ( !$gambar ) {
+        return false;
+    }
 
     // Query insert data
     $insert = "INSERT INTO mahasiswa
@@ -52,7 +57,14 @@ function edit($data) {
     $npm = htmlspecialchars($data["npm"]);
     $jurusan = htmlspecialchars($data["jurusan"]);
     $email = htmlspecialchars($data["email"]);
-    $gambar = $data["gambar"];
+    $oldGambar = $data["oldGambar"];
+
+    // Cek perubahan gambar
+    if ( $_FILES["gambar"]["error"] === 4 ) {
+        $gambar = $oldGambar;
+    } else {
+        $gambar = upload();
+    }
 
     // Query Update data
     $edit = "UPDATE mahasiswa 
@@ -77,6 +89,55 @@ function search($keyword) {
             ";
 
     return query($query);
+}
+
+function upload() {
+    $nameFile = $_FILES["gambar"]["name"];
+    $sizeFile = $_FILES["gambar"]["size"];
+    $errorFile = $_FILES["gambar"]["error"];
+    $tempFile = $_FILES["gambar"]["temp_name"];
+
+    // Cek ketersediaan gambar
+    if ( $errorFile === 4 ) {
+        echo "
+            <script>
+                alert ('Please Upload Your Photo!');
+            </script>
+        ";
+        return false;
+    }
+
+    // Cek ekstensi gambar
+    $ekstensiGambarValid = ['jpg', 'jepg', 'png'];
+    $ekstensiGambar = explode('.', $nameFile);
+    $ekstensiGambar = strtolower(end($ekstensiGambar));
+
+    if ( !in_array($ekstensiGambar, $ekstensiGambarValid) ) {
+        echo "
+            <script>
+                alert ('Your Uploaded is not a Photo!');
+            </script>
+        ";
+        return false;
+    }
+
+    // Cek ukuran gambar
+    // 1mb = 1000000
+    if ( $sizeFile > 2000000 ) {
+        echo "
+            <script>
+                alert ('The Photo You Uploaded is too Big. Max size is 2mb!');
+            </script>
+        ";
+        return false;
+    }
+
+    // Valid Uploaded
+    // Generate name gambar
+    $nameNewGambar = uniqid().'.'.$ekstensiGambar;
+    move_uploaded_file($tempFile, 'img/'.$nameNewGambar);
+
+    return $nameFile;
 }
 
 ?>

@@ -2,7 +2,7 @@
 require 'functions.php';
 
 // Pengecekan tombol submit
-if ( isset($_POST["submit"]) ) { 
+if ( isset($_POST["submit"]) ) {
     // Pengecekan input data
     if ( add($_POST) > 0 ) {
         echo "
@@ -33,33 +33,33 @@ if ( isset($_POST["submit"]) ) {
 <body>
 
 <h1>ADD NEW DATA</h1>
-<form action="" method="POST">
+<form action="" method="POST" enctype="multipart/form-data">
     <table>
         <tr>
             <td><label for ="nama">Nama</label></td>
             <td>:</td>
-            <td><input type="text" name="nama" id="nama" required></td>
+            <td><input type="text" name="nama" id="nama" autocomplete="off" required autofocus></td>
             <!-- required = agar inputan tidak kosong -->
         </tr>
         <tr>
             <td><label for ="npm">NPM</label></td>
             <td>:</td>
-            <td><input type="text" name="npm" id="npm" required></td>
+            <td><input type="text" name="npm" id="npm" autocomplete="off" required></td>
         </tr>
         <tr>
             <td><label for ="jurusan">Jurusan</label></td>
             <td>:</td>
-            <td><input type="text" name="jurusan" id="jurusan" required></td>
+            <td><input type="text" name="jurusan" id="jurusan" autocomplete="off" required></td>
         </tr>
         <tr>
             <td><label for ="email">Email</label></td>
             <td>:</td>
-            <td><input type="text" name="email" id="email" required></td>
+            <td><input type="text" name="email" id="email" autocomplete="off" required></td>
         </tr>
         <tr>
             <td><label for ="gambar">Photo</label></td>
             <td>:</td>
-            <td><input type="text" name="gambar" id="gambar" required></td>
+            <td><input type="file" name="gambar" id="gambar"></td>
         </tr>
         <tr>
             <td><button type="submit" name="submit">Submit</button></td>
