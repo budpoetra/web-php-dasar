@@ -1,7 +1,13 @@
 <?php
 require "functions.php";
 
-$mahasiswa = query("SELECT * FROM mahasiswa");
+$mahasiswa = query("SELECT * FROM mahasiswa ORDER BY nama ASC");
+
+// Fitur Searching
+$keyword = $_POST["keyword"];
+if ( isset($_POST["search"]) ) {
+    $mahasiswa = search($keyword);
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +24,13 @@ $mahasiswa = query("SELECT * FROM mahasiswa");
 
 <a href="add.php">Add New Data</a>
 <br>
+<br>
+
+<!-- Serching -->
+<form action="" method="POST">
+    <input type="text" name="keyword" placeholder="Searching..." autocomplete="off" autofocus>
+    <button type="submit" name="search">Search</button>
+</form>
 <br>
 
 <table border="1" cellspacing="0" cellpadding="10">

@@ -54,7 +54,7 @@ function edit($data) {
     $email = htmlspecialchars($data["email"]);
     $gambar = $data["gambar"];
 
-    // Query insert data
+    // Query Update data
     $edit = "UPDATE mahasiswa 
                 SET 
             nama = '$nama', npm = '$npm', jurusan = '$jurusan', email = '$email', gambar = '$gambar'
@@ -64,6 +64,19 @@ function edit($data) {
     mysqli_query($conn, $edit);
 
     return mysqli_affected_rows($conn);
+}
+
+function search($keyword) {
+    global $conn;
+    $query = "SELECT * FROM mahasiswa 
+                WHERE 
+            nama LIKE '%$keyword%' OR 
+            npm LIKE '%$keyword%' OR 
+            email LIKE '%$keyword%' OR 
+            jurusan LIKE '%$keyword%'
+            ";
+
+    return query($query);
 }
 
 ?>
