@@ -43,4 +43,27 @@ function delete($nama) {
     return mysqli_affected_rows($conn);
 }
 
+function edit($data) {
+    global $conn;
+
+    // Pengambilan data
+    $id = $data["id"];
+    $nama = htmlspecialchars($data["nama"]);
+    $npm = htmlspecialchars($data["npm"]);
+    $jurusan = htmlspecialchars($data["jurusan"]);
+    $email = htmlspecialchars($data["email"]);
+    $gambar = $data["gambar"];
+
+    // Query insert data
+    $edit = "UPDATE mahasiswa 
+                SET 
+            nama = '$nama', npm = '$npm', jurusan = '$jurusan', email = '$email', gambar = '$gambar'
+                WHERE 
+            id = $id; 
+            ";
+    mysqli_query($conn, $edit);
+
+    return mysqli_affected_rows($conn);
+}
+
 ?>

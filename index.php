@@ -36,7 +36,7 @@ $mahasiswa = query("SELECT * FROM mahasiswa");
     <?php foreach( $mahasiswa as $mhs ) : ?>
         <tr>
             <td>
-                <a href="edit.php">Edit</a>
+                <a href="edit.php?id=<?= $mhs["id"]; ?>">Edit</a>
                 |
                 <a href="delete.php?nama=<?= $mhs["nama"]; ?>" onclick="return confirm('Apakah Anda Yakin Akan Menghapus Data Ini?');">Delete</a>
             </td>
