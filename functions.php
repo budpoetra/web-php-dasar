@@ -1,7 +1,17 @@
 <?php
 
+$serverName = "localhost";
+$databaseName = "phpdasar";
+$username = "root";
+$password = "";
+
 // Database connection
-$conn = mysqli_connect("localhost", "root", "", "phpdasar");
+$conn = mysqli_connect($serverName, $username, $password, $databaseName);
+
+// Cek koneksi Database
+if ( !$conn ) {
+   die("Connection Failed:".mysqli_connect_errno()); 
+}
 
 function query($query) {
     // Query data
@@ -64,6 +74,13 @@ function edit($data) {
         $gambar = $oldGambar;
     } else {
         $gambar = upload();
+        if ( !$gambar ) {
+            echo "
+            <script>
+                alert ('Your Photo Back to Old');
+            </script>
+        ";
+        }
     }
 
     // Query Update data
@@ -92,10 +109,12 @@ function search($keyword) {
 }
 
 function upload() {
+    // var_dump($_FILES);
+    // die;
     $nameFile = $_FILES["gambar"]["name"];
     $sizeFile = $_FILES["gambar"]["size"];
     $errorFile = $_FILES["gambar"]["error"];
-    $tempFile = $_FILES["gambar"]["temp_name"];
+    $tempFile = $_FILES["gambar"]["tmp_name"];
 
     // Cek ketersediaan gambar
     if ( $errorFile === 4 ) {
@@ -108,7 +127,7 @@ function upload() {
     }
 
     // Cek ekstensi gambar
-    $ekstensiGambarValid = ['jpg', 'jepg', 'png'];
+    $ekstensiGambarValid = ['jpg', 'jpeg', 'png'];
     $ekstensiGambar = explode('.', $nameFile);
     $ekstensiGambar = strtolower(end($ekstensiGambar));
 
@@ -137,7 +156,7 @@ function upload() {
     $nameNewGambar = uniqid().'.'.$ekstensiGambar;
     move_uploaded_file($tempFile, 'img/'.$nameNewGambar);
 
-    return $nameFile;
+    return $nameNewGambar;
 }
 
 ?>
