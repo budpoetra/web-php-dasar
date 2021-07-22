@@ -1,0 +1,67 @@
+<?php 
+require 'functions.php';
+
+if ( isset($_POST["registrasi"]) ) {
+
+    if ( registrasi($_POST) > 0 ) {
+        echo "
+            <script>
+                alert ('Success to Sign Up!');
+                document.location.href = 'login.php';
+            </script>
+        ";
+    } else {
+        echo "
+            <script>
+                alert ('Failure to Sign Up!');
+            </script>
+        ";
+    }      
+} 
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGN UP</title>
+</head>
+<body>
+
+<h1>SIGN UP</h1>
+
+<form action="" method="POST">
+    <table>
+        <tr>
+            <td><label for="name">Name</label></td>
+            <td>:</td>
+            <td><input type="text" name="name" id="name" require autofocus></td>
+        </tr>
+        <tr>
+            <td><label for="username">Username</label></td>
+            <td>:</td>
+            <td><input type="text" name="username" id="username" require></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password</label></td>
+            <td>:</td>
+            <td><input type="password" name="password" id="password" require></td>
+        </tr>
+        <tr>
+            <td><label for="password2">Re-Password</label></td>
+            <td>:</td>
+            <td><input type="password" name="password2" id="password2" require></td>
+        </tr>
+        <tr>
+            <td><label for="email">Email</label></td>
+            <td>:</td>
+            <td><input type="text" name="email" id="email" require></td>
+        </tr>
+    </table>
+    <button type="submit" name="registrasi">Sign Up!</button>
+</form>
+    
+</body>
+</html>

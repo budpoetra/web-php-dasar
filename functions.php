@@ -72,14 +72,15 @@ function edit($data) {
     // Cek perubahan gambar
     if ( $_FILES["gambar"]["error"] === 4 ) {
         $gambar = $oldGambar;
-    } else {
-        $gambar = upload();
-        if ( !$gambar ) {
-            echo "
+        echo "
             <script>
                 alert ('Your Photo Back to Old');
             </script>
         ";
+    } else {
+        $gambar = upload();
+        if ( !$gambar ) {
+            return false;
         }
     }
 
@@ -96,7 +97,6 @@ function edit($data) {
 }
 
 function search($keyword) {
-    global $conn;
     $query = "SELECT * FROM mahasiswa 
                 WHERE 
             nama LIKE '%$keyword%' OR 
@@ -109,8 +109,6 @@ function search($keyword) {
 }
 
 function upload() {
-    // var_dump($_FILES);
-    // die;
     $nameFile = $_FILES["gambar"]["name"];
     $sizeFile = $_FILES["gambar"]["size"];
     $errorFile = $_FILES["gambar"]["error"];
@@ -153,10 +151,54 @@ function upload() {
 
     // Valid Uploaded
     // Generate name gambar
-    $nameNewGambar = uniqid().'.'.$ekstensiGambar;
+    $nameNewGambar = 'Image-'.uniqid().'.'.$ekstensiGambar;
     move_uploaded_file($tempFile, 'img/'.$nameNewGambar);
 
     return $nameNewGambar;
+}
+
+function registrasi($data) {
+    global $conn;
+    
+    // Query data
+    $name = $data["name"];
+    $username = strtolower(stripslashes($data["username"]));
+    $email = $data["email"];
+    $password = mysqli_real_escape_string($conn, $data["password"]);
+    $password2 = mysqli_real_escape_string($conn, $data["password2"]);
+
+    // Cek Kesamaan Username
+    $result = mysqli_query($conn, "SELECT username FROM account WHERE username = '$username'");
+
+    if ( mysqli_fetch_assoc($result) ) {
+        echo "
+            <script>
+                alert ('Username is exist');
+            </script>
+        ";
+        return false;
+    }
+    
+    // Pengecekan password
+    if ( $password !== $password2 ) {
+       echo "
+            <script>
+                alert ('Passwords do not match');
+            </script>
+        ";
+        return false; 
+    }
+
+    // Enkripsi password
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $query = ("INSERT INTO account
+                VALUE
+            (NULL, '$name', '$username', '$email', '$password')
+            ");
+    
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
 }
 
 ?>
