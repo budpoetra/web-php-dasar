@@ -1,17 +1,13 @@
 <?php
-// cek tombol submit
-if ( isset($_POST["submit"]) ) {
+require 'functions.php';
 
-    // cek validasi username dan password
-    if ( $_POST["username"] == "admin" && $_POST["password"] == "admin") {
-        // true
-        header("Location: index.php");
-        exit;
+// cek tombol submit
+if ( isset($_POST["sign_in"]) ) {
+    if ( login($_POST) ) {
+        header("Locations: index.php");
     } else {
-        // false
-        $error = true;
+        $error =  true;
     }
-    
 }
 ?>
 
@@ -21,31 +17,31 @@ if ( isset($_POST["submit"]) ) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign In</title>
 </head>
 <body>
 
-<h1>Login</h1>
+<h1>Sign In</h1>
 
 <?php if (isset($error)) : ?>
 <p>Username / Password Salah</p>
 <?php endif;?>
 
 <form action="" method="POST">
-    <li>
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username">
-    </li>
-
-    <li>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password">
-    </li>
-
-    <li>
-        <button type="submit" name="submit">Login</button>
-    </li>
+    <table>
+        <tr>
+            <td><label for="username">Username</label></td>
+            <td>:</td>
+            <td><input type="text" name="username" id="username"></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password</label></td>
+            <td>:</td>
+            <td><input type="password" name="password" id="password"></td>
+        </tr>
+    </table>
+    <button type="submit" name="sign_in">Sign In</button>
 </form>
-    
+
 </body>
 </html>
