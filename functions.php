@@ -201,26 +201,4 @@ function registrasi($data) {
     return mysqli_affected_rows($conn);
 }
 
-function login($data) {
-    global $conn;
-
-    // Query data
-    $username = $data["username"];
-    $password = $data["password"];
-
-    $cekUsername = mysqli_query($conn, "SELECT * FROM account WHERE username = '$username'");
-
-    // Cek ketersediaan username
-    if ( mysqli_num_rows($cekUsername) === 1 ) {
-        // Cek password
-        $fetch = mysqli_fetch_assoc($cekUsername);
-        if ( password_verify($password, $fetch["password"]) ) {
-            return true;
-            exit;
-        }
-        
-        return false;
-    }
-}
-
 ?>
