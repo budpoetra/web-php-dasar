@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+// Pengecekan Log In
+if ( !isset($_SESSION["login"]) ) {
+    header("Location: login.php");
+    exit;
+}
+
 require "functions.php";
 
 $mahasiswa = query("SELECT * FROM mahasiswa ORDER BY nama ASC");
@@ -23,6 +31,10 @@ if ( isset($_POST["search"]) ) {
 <h1>Web PHP Dasar</h1>
 
 <a href="add.php">Add New Data</a>
+<br>
+<br>
+
+<a href="logout.php">Log Out</a>
 <br>
 <br>
 

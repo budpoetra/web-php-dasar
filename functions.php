@@ -215,7 +215,7 @@ function login($data) {
         // Cek password
         $fetch = mysqli_fetch_assoc($cekUsername);
         if ( password_verify($password, $fetch["password"]) ) {
-            header("Location: index.php");
+            return true;
             exit;
         }
         

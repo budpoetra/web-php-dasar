@@ -1,4 +1,11 @@
 <?php 
+session_start();
+
+// Pengecekan Log In
+if ( !isset($_SESSION["login"]) ) {
+    header("Location: login.php");
+    exit;
+}
 
 require 'functions.php';
 

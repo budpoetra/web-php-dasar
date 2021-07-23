@@ -1,10 +1,21 @@
 <?php
+session_start();
+
+// Cek Login
+if ( isset($_SESSION["login"]) ) {
+    header("Location: index.php");
+    exit;
+}
+
 require 'functions.php';
 
 // cek tombol submit
 if ( isset($_POST["sign_in"]) ) {
     if ( login($_POST) ) {
-        header("Locations: index.php");
+        // Create session
+        $_SESSION["login"] = true;
+
+        header("Location: index.php");
     } else {
         $error =  true;
     }
