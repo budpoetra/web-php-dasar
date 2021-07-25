@@ -1,20 +1,21 @@
-// Ambil element's
-let search = document.getElementById('search');
-let table = document.getElementById('table');
+$(document).ready(function() {
 
-// Event
-search.addEventListener('keyup', function() {
-    // Create AJaX Object
-    let ajax = new XMLHttpRequest();
+    $('.loader').hide();
 
-    // Cek Kesiapan AJaX
-    ajax.onreadystatechange = function() {
-        if ( ajax.readyState == 4 && ajax.status == 200 ) {
-            table.innerHTML = ajax.responseText;
-        }
-    }
+    $('#search').on('keyup', function() {
+        // Memunculkan Loader
+        $('.loader').show();
 
-    // Execute AJaX
-    ajax.open('GET', 'js/ajax/sumber.php?search=' + search.value, true);
-    ajax.send();
+        // Eksekusi jQuery menggunakan load
+        // $('#table').load('js/sumber.php?search=' + $('#search').val() );
+
+        // Eksekusi jQuery menggunakan get
+        $.get('js/sumber.php?search=' + $('#search').val(), function(data) {
+            $('table').html(data);
+            
+            // Menghilangkan Loader
+            $('.loader').hide();
+        });
+    });
+
 });
